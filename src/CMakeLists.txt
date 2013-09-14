@@ -42,16 +42,16 @@ add_executable(audacity ${SRC})
 
 get_property(AUDACITY_LINK_LIBS GLOBAL PROPERTY AUDACITY_LINK_LIBS)
 
-# message(FATAL_ERROR "Helloo: ${GTK2_GLIB_LIBRARY}")
+# message(FATAL_ERROR "Helloo: ${GTK2_LIBRARIES}")
 
 target_link_libraries(audacity
 		${CMAKE_DL_LIBS}
 		${wxWidgets_LIBRARIES}
-		${GTK2_LIBRARIES}
 		${EXPAT_LIBRARIES}
 		${SNDFILE_LIBRARIES}
 		${FLACXX_LIBRARIES}
 		${AUDACITY_LINK_LIBS}
 		${PORTAUDIO_LIBRARIES}
 		${GTK2_GLIB_LIBRARY}
+        ${GTK2_LIBRARIES}
 		)

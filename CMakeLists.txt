@@ -136,7 +136,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 add_definitions(-DAUDACITY_DLL_API=)
 add_definitions(-DAUDACITY_NAME="audacity")
 add_definitions(-DLIBDIR="/usr/lib")  # XXX ?
-add_definitions(-DHAVE_GTK)
 add_definitions(-DUSE_LIBRESAMPLE) # XXX optional
 add_definitions(-DINSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
@@ -161,6 +160,7 @@ endif()
 if(UNIX AND NOT APPLE)
 	find_package(GTK2 2.6 REQUIRED gtk)
 	add_definitions(-D__WXGTK__)
+	set(HAVE_GTK 1)  # 1 because of config.h
 elseif(WINDOWS)
 	# pass
 endif()
@@ -186,12 +186,17 @@ set(PORTAUDIO_LIBRARIES "${PORTAUDIO_LIBRARY}")
 # ----
 # FileDialog
 
+# config file
+configure_file("${PROJECT_SOURCE_DIR}/lib-src/FileDialog/config.h.in"
+               "${PROJECT_BINARY_DIR}/lib-src/FileDialog/config.h")
+
 FILE(GLOB SRC
 	lib-src/FileDialog/*.cpp
 	lib-src/FileDialog/gtk/*.cpp
 	)
 set(INC
 	lib-src/FileDialog
+	${PROJECT_BINARY_DIR}/lib-src/FileDialog
 )
 set(INC_SYS
 )
