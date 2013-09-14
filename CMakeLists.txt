@@ -13,6 +13,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin CACHE INTERNAL "" FORCE)
 
 set(AUDACITY_LINK_LIBS)
 
+
+
 #-----------------------------------------------------------------------------
 # Set policy
 
@@ -28,6 +30,7 @@ cmake_policy(SET CMP0010 NEW)
 
 # Input directories must have CMakeLists.txt
 cmake_policy(SET CMP0014 NEW)
+
 
 
 #-----------------------------------------------------------------------------
@@ -213,7 +216,6 @@ unset(INC_SYS)
 
 
 
-
 # ----
 # lib-widget-extra
 
@@ -231,8 +233,6 @@ audacity_add_lib(lib_src_lib_widget_extra "${SRC}" "${INC}" "${INC_SYS}")
 unset(SRC)
 unset(INC)
 unset(INC_SYS)
-
-
 
 
 
@@ -256,9 +256,47 @@ unset(INC_SYS)
 
 
 
-
-
 #-----------------------------------------------------------------------------
 # Audacity Application
 
 add_subdirectory(src)
+
+
+
+#-----------------------------------------------------------------------------
+# Installation
+
+# TODO:
+# - ./share/audacity/plug-ins/*.ny
+# - ./share/audacity/nyquist/...
+
+install(
+	PROGRAMS ${CMAKE_BINARY_DIR}/bin/audacity
+	DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/
+)
+
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/LICENSE.txt
+		${CMAKE_SOURCE_DIR}/README.txt
+	DESTINATION "${CMAKE_INSTALL_PREFIX}/share/doc/audacity/"
+)
+
+# TODO, gzip?
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/help/audacity.1
+	DESTINATION "${CMAKE_INSTALL_PREFIX}/share/man/man1/"
+)
+
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/src/audacity.xml
+	DESTINATION "${CMAKE_INSTALL_PREFIX}/share/mime/packages/"
+)
+
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/presets/EQDefaultCurves.xml
+	DESTINATION "${CMAKE_INSTALL_PREFIX}/share/audacity/"
+)
