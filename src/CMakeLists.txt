@@ -53,5 +53,5 @@ target_link_libraries(audacity
 		${AUDACITY_LINK_LIBS}
 		${PORTAUDIO_LIBRARIES}
 		${GTK2_GLIB_LIBRARY}
-        ${GTK2_LIBRARIES}
+		${GTK2_LIBRARIES}
 		)
