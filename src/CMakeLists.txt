@@ -1,7 +1,8 @@
 set(INC
 	.
 	./widgets
-	./include
+
+	${CMAKE_SOURCE_DIR}/include
 )
 
 set(INC_SYS

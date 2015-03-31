@@ -140,6 +140,8 @@ add_definitions(-DAUDACITY_DLL_API=)
 add_definitions(-DAUDACITY_NAME="audacity")
 add_definitions(-DLIBDIR="/usr/lib")  # XXX ?
 add_definitions(-DUSE_LIBRESAMPLE) # XXX optional
+add_definitions(-DHAVE_INTTYPES_H) # XXX
+add_definitions(-DDEBUG) # XXX
 add_definitions(-DINSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 
@@ -161,7 +163,7 @@ endif()
 # XXX, linux only
 
 if(UNIX AND NOT APPLE)
-	find_package(GTK2 2.6 REQUIRED gtk)
+	find_package(GTK2 2.8 REQUIRED gtk)
 	add_definitions(-D__WXGTK__)
 	set(HAVE_GTK 1)  # 1 because of config.h
 elseif(WINDOWS)
@@ -189,9 +191,9 @@ set(PORTAUDIO_LIBRARIES "${PORTAUDIO_LIBRARY}")
 # ----
 # FileDialog
 
-# config file
-configure_file("${PROJECT_SOURCE_DIR}/lib-src/FileDialog/config.h.in"
-               "${PROJECT_BINARY_DIR}/lib-src/FileDialog/config.h")
+#~ # config file
+#~ configure_file("${PROJECT_SOURCE_DIR}/lib-src/FileDialog/config.h.in"
+#~                "${PROJECT_BINARY_DIR}/lib-src/FileDialog/config.h")
 
 FILE(GLOB SRC
 	lib-src/FileDialog/*.cpp
@@ -199,9 +201,13 @@ FILE(GLOB SRC
 	)
 set(INC
 	lib-src/FileDialog
+	lib-src/FileDialog/gtk
 	${PROJECT_BINARY_DIR}/lib-src/FileDialog
 )
 set(INC_SYS
+	${wxWidgets_INCLUDE_DIRS}
+	# grr, should not need this
+	/usr/include/wx-2.8
 )
 
 if(GTK2_FOUND)
